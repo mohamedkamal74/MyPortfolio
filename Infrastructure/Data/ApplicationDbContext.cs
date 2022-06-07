@@ -23,8 +23,8 @@ namespace Infrastructure.Data
                 {
                     Id = Guid.NewGuid(),
                     FullName="Mohamed Kamal",
-                    JobTitle = "Web Developer-.net Core",
-                    profile= "avatar.jpg"
+                    JobTitle = "Web Developer / .net Core",
+                    profile= "2.jpeg"
 
                 }) ; 
         }
