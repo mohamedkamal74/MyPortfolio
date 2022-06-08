@@ -56,7 +56,7 @@ namespace web.Controllers
         {
             if (ModelState.IsValid)
             {
-                if(model.File!= null)
+                if(model.File != null)
                 {
                     string Uploads = Path.Combine(_hosting.WebRootPath, @"img\portfolio");
                     string FullPath = Path.Combine(Uploads, model.File.FileName);
@@ -66,7 +66,7 @@ namespace web.Controllers
                 {
                         Description = model.Description,    
                         ProjectName=model.ProjectName,
-                        ImageUrl=model.ImageUrl
+                        ImageUrl=model.File.FileName
                 };
                 _prtoflio.Entity.Add(prtofolioItem);
                 _prtoflio.Save();
@@ -116,9 +116,10 @@ namespace web.Controllers
                 }
                 PrtofolioItem prtofolioItem = new PrtofolioItem
                 {
+                    Id=model.Id,
                     Description = model.Description,
                     ProjectName = model.ProjectName,
-                    ImageUrl = model.ImageUrl
+                    ImageUrl = model.File.FileName
                 };
                 _prtoflio.Entity.Update(prtofolioItem);
                 _prtoflio.Save();
@@ -129,24 +130,25 @@ namespace web.Controllers
         }
 
         // GET: PrtoflioItemsController/Delete/5
+        //[Route("PrtoflioItems/Delete/")]
         public ActionResult Delete(Guid? id)
         {
-            if (id == null)
+            if(id == null)
             {
                 return NotFound();
             }
-            var prttoflio = _prtoflio.Entity.GetTById(id);
-            if (prttoflio == null)
+            var prttoflioItem = _prtoflio.Entity.GetTById(id);
+            if (prttoflioItem == null)
             {
                 return NotFound();
             }
-            return View(prttoflio);
+            return View(prttoflioItem);
         }
 
         // POST: PrtoflioItemsController/Delete/5
-        [HttpPost]
+        [HttpPost,ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(Guid id)
+        public ActionResult DeleteConfirm(Guid id)
         {
             _prtoflio.Entity.Delete(id);
             _prtoflio.Save();
